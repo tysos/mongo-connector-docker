@@ -1,0 +1,38 @@
+{
+    "mainAddress": "mongodb://user:pwd@dds-XXXXXXXXX.mongodb.rds.aliyuncs.com:3717,dds-XXXXXXXXXX.mongodb.rds.aliyuncs.com:3717/admin?replicaSet=mgset-7231779",
+   "oplogFile": "./oplog.timestamp",
+   "noDump": false,
+   "batchSize": -1,
+   "verbosity": 2,
+   "continueOnError": true,
+   "logging": {
+        "type": "file",
+        "filename": "./mongo-connector.log",
+        "__format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d - %(message)s",
+        "__rotationWhen": "D",
+        "__rotationInterval": 1,
+        "__rotationBackups": 10,
+
+        "__type": "syslog",
+        "__host": "localhost:514"
+    },
+   "namespaces": {
+        "story.picture_books": {
+            "rename": "story.picture_books"
+        }
+    },
+   "exclude_fields": ["code"],
+   "docManagers": [
+       {
+           "docManager": "elastic2_doc_manager",
+           "targetURL": "http://elastic:pwd@es-XXXXXXXX.elasticsearch.aliyuncs.com:9200",
+           "bulkSize": 10,
+           "uniqueKey": "_id",
+           "autoCommitInterval": 0,
+           "args": {
+              "meta_index_name": "story",
+              "clientOptions": {"timeout": 5000}
+           }
+       }
+   ]
+}
